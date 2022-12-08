@@ -259,7 +259,7 @@ function attachOutports(device) {
 
         // Message events have a tag as well as a payload
         console.log(`${ev.tag}: ${ev.payload}`);
-
+        if (ev.tag === "thresh") console.log("from the first outlet");
         document.getElementById("rnbo-console-readout").innerText = `${ev.tag}: ${ev.payload}`;
     });
 }
@@ -332,5 +332,7 @@ function makeMIDIKeyboard(device) {
         mdiv.appendChild(key);
     });
 }
+
+
 
 setup();
