@@ -12,8 +12,7 @@ async function setup() {
     // Create button to allow starting web context
     
     
-    let button = document.getElementById("some-button");
-    button.onpointerdown = () => { context.resume() };
+    
      
         // Fetch the exported patcher
     
@@ -259,6 +258,9 @@ function makeInportForm(device) {
             // Send the message event to the RNBO device
             let messageEvent = new RNBO.MessageEvent(RNBO.TimeNow, inportTag, values);
             device.scheduleEvent(messageEvent);
+            // let button = document.getElementById("some-button");
+            // button.onpointerdown = () => { context.resume() };
+            context.resume()
         }
     }
 }
