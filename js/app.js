@@ -8,8 +8,9 @@ async function setup() {
     // Create gain node and connect it to audio output
     const outputNode = context.createGain();
     outputNode.connect(context.destination);
+
+   
     
-    // Fetch the exported patcher
     let response, patcher;
     try {
         response = await fetch(patchExportURL);
@@ -70,6 +71,15 @@ async function setup() {
 
     // Connect the device to the web audio graph
     device.node.connect(outputNode);
+
+     // Assuming you have a RNBO device already, and an audio context as well
+    const handleSuccess = (stream) => {
+        const source = context.createMediaStreamSource(stream);
+        source.connect(device.node);
+    }
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+        .then(handleSuccess);
+
 
     // (Optional) Extract the name and rnbo version of the patcher from the description
     document.getElementById("patcher-title").innerText = (patcher.desc.meta.filename || "Unnamed Patcher") + " (v" + patcher.desc.meta.rnboversion + ")";
@@ -256,9 +266,16 @@ function attachOutports(device) {
 
     document.getElementById("rnbo-console").removeChild(document.getElementById("no-outports-label"));
     device.messageEvent.subscribe((ev) => {
-
-        // Message events have a tag as well as a payload
+        
         console.log(`${ev.tag}: ${ev.payload}`);
+         // Create button to allow starting web context
+        // let button = document.getElementById("some-button");
+        // try {
+
+        //     button.onpointerdown = () => { context.resume() };
+        //     } catch (e) {}
+        // Fetch the exported patcher
+        //     Message events have a tag as well as a payload
         if (ev.tag === "thresh") console.log("from the first outlet");
         document.getElementById("rnbo-console-readout").innerText = `${ev.tag}: ${ev.payload}`;
     });
