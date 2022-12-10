@@ -9,7 +9,13 @@ async function setup() {
     const outputNode = context.createGain();
     outputNode.connect(context.destination);
 
-   
+    // Create button to allow starting web context
+    
+    try {
+        let button = document.getElementById("some-button");
+        button.onpointerdown = () => { context.resume() };
+     } catch (e) {}
+        // Fetch the exported patcher
     
     let response, patcher;
     try {
@@ -268,13 +274,7 @@ function attachOutports(device) {
     device.messageEvent.subscribe((ev) => {
         
         console.log(`${ev.tag}: ${ev.payload}`);
-         // Create button to allow starting web context
-        // let button = document.getElementById("some-button");
-        // try {
-
-        //     button.onpointerdown = () => { context.resume() };
-        //     } catch (e) {}
-        // Fetch the exported patcher
+        
         //     Message events have a tag as well as a payload
         if (ev.tag === "thresh") console.log("from the first outlet");
         document.getElementById("rnbo-console-readout").innerText = `${ev.tag}: ${ev.payload}`;
