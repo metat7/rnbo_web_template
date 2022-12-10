@@ -11,10 +11,10 @@ async function setup() {
 
     // Create button to allow starting web context
     
-    try {
-        let button = document.getElementById("some-button");
-        button.onpointerdown = () => { context.resume() };
-     } catch (e) {}
+    
+    let button = document.getElementById("some-button");
+    button.onpointerdown = () => { context.resume() };
+     
         // Fetch the exported patcher
     
     let response, patcher;
